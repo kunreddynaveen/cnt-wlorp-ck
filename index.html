@@ -3,9 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script>
+      // Defensive safe-guard wrapper against sandboxed or browser frame environments
+      // where window.fetch is configured strictly as a getter-only property.
+      // Redefining with a custom getter/setter absorbs assignments without throwing.
+      (function() {
+        try {
+          var originalFetch = window.fetch;
+          var currentFetch = originalFetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return currentFetch;
+            },
+            set: function(val) {
+              currentFetch = val;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          console.warn('[Fetch Property Defensive Patch Error]', e);
+        }
+      })();
+    </script>
     <title>Cousin's Kitchen</title>
-    <script type="module" crossorigin src="/assets/index-CW2eHKwY.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-mKnSYFxQ.css">
+    <script type="module" crossorigin src="/assets/index-CXwX2U5D.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-cErC_KrM.css">
   </head>
   <body>
     <div id="root"></div>
